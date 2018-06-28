@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import LabelBinarizer
 from sklearn.preprocessing import LabelEncoder
-
+import lightgbm as lgb
 
 #takes a list of column name strings, returns a df with changed columns
 #columns are categorical and changed to categorical labels
@@ -54,3 +54,5 @@ def to_fill_na(df,nan_dict):
 		else:
 			df[key].fillna(value=value,inplace=True)
 	return df
+
+
