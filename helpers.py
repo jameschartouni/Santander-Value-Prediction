@@ -56,3 +56,12 @@ def to_fill_na(df,nan_dict):
 	return df
 
 
+def rmsle(y_true, y_pred):
+    log_error = np.log1p(y_true) - np.log1p(y_pred)
+    return np.sqrt( np.square(log_error).mean() )
+
+
+
+
+
+
