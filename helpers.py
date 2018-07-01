@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import LabelBinarizer
 from sklearn.preprocessing import LabelEncoder
 import lightgbm as lgb
+import numpy as np
 
 #takes a list of column name strings, returns a df with changed columns
 #columns are categorical and changed to categorical labels
@@ -60,8 +61,43 @@ def rmsle(y_true, y_pred):
     log_error = np.log1p(y_true) - np.log1p(y_pred)
     return np.sqrt( np.square(log_error).mean() )
 
+def rmse(y_true, y_pred):
+    error = y_true - y_pred
+    return np.sqrt( np.square(log_error).mean() )
 
 
+import math 
 
+def rmse_2(estimator, X, y0):
+    #print(estimator.best_params_)
+    y = estimator.predict(X)
+    if len(y[y<=-1]) != 0:
+        y[y<=-1] = 0.0
+    #print("here",y[y<=-1],len(y[y<=-1]))
+    assert len(y) == len(y0)
+    r = np.sqrt(np.mean(np.power(y-y0, 2)))
+    if math.isnan(r):
+        print("this is a nan")
+        print(scipy.stats.describe(y))
+        plt.hist(y, bins=10, color='blue')
+        plt.savefig("nan_y.png")
+        
+    return -r
+
+def rmsle_2(estimator, X, y0):
+    #print(estimator.best_params_)
+    y = estimator.predict(X)
+    if len(y[y<=-1]) != 0:
+        y[y<=-1] = 0.0
+    #print("here",y[y<=-1],len(y[y<=-1]))
+    assert len(y) == len(y0)
+    r = np.sqrt(np.mean(np.power(np.log1p(y)-np.log1p(y0), 2)))
+    if math.isnan(r):
+        print("this is a nan")
+        print(scipy.stats.describe(y))
+        plt.hist(y, bins=10, color='blue')
+        plt.savefig("nan_y.png")
+        
+    return r
 
 
